@@ -1,0 +1,72 @@
+project structure for: c:\xampp\htdocs\ADEMAISON INTERIORS
+==================================================
+ademaison/
+│
+├── assets/
+│   ├── css/
+│   │   ├── base.css          → reset, typography, variables
+│   │   ├── layout.css        → grid, spacing, sections
+│   │   ├── components.css    → buttons, forms, cards
+│   │   ├── animations.css    → transitions & motion rules
+│   │   └── pages.css         → page-specific tweaks
+│   │
+│   ├── js/
+│   │   ├── main.js           → global JS
+│   │   ├── animations.js     → GSAP / motion logic
+│   │   └── forms.js          → form handling & validation
+│   │
+│   ├── fonts/
+│   │   ├── juana/
+│   │   └── montserrat/
+│   │
+│   └── images/
+│       ├── placeholders/
+│       └── icons/            → clean generic SVG icons
+│
+├── inc/
+│   ├── setup.php             → theme supports, menus
+│   ├── assets.php            → enqueue styles/scripts
+│   ├── breadcrumbs.php      → breadcrumb logic
+│   ├── custom-post-types.php → Projects, Services
+│   ├── seo.php               → meta, schema, OG
+│   ├── sitemap.php           → XML sitemap logic
+│   ├── forms.php             → booking/contact logic
+│   ├── performance.php       → caching, cleanup
+│   └── security.php          → hardening
+│
+├── template-parts/
+│   ├── global/
+│   │   ├── header.php
+│   │   ├── footer.php
+│   │   └── breadcrumbs.php
+│   │
+│   ├── sections/
+│   │   ├── hero.php
+│   │   ├── services.php
+│   │   ├── portfolio-slider.php
+│   │   ├── why-choose.php
+│   │   ├── testimonials.php
+│   │   └── cta-booking.php
+│   │
+│   └── components/
+│       ├── buttons.php
+│       ├── cards.php
+│       ├── forms.php
+│       └── icons.php
+│
+├── templates/
+│   ├── page-power.php         → Homepage (PowerPage)
+│   ├── page-about.php
+│   ├── page-services.php
+│   ├── page-portfolio.php
+│   ├── page-why.php
+│   ├── page-testimonials.php
+│   └── page-booking.php
+│
+├── archive-projects.php
+├── single-projects.php
+│
+├── functions.php
+├── style.css                 → theme header only
+├── index.php
+└── screenshot.png

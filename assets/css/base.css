@@ -1,0 +1,5 @@
+/* base.css — reset, typography, variables */
+:root {
+  --primary: #333;
+}
+/* Add reset and typographic rules here */
