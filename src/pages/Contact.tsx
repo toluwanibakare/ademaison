@@ -127,7 +127,7 @@ const Contact = () => {
                       <h4 className="font-medium text-foreground mb-1">
                         Location
                       </h4>
-                      <p className="text-muted-foreground">Lagos, Nigeria</p>
+                      <p className="text-muted-foreground">Port Harcourt, Rivers State, Nigeria</p>
                     </div>
                   </div>
 
@@ -321,7 +321,7 @@ const Contact = () => {
           <div className="text-center">
             <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground">
-              Lagos, Nigeria
+              Port Harcourt, Rivers State, Nigeria
             </p>
           </div>
         </div>

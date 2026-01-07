@@ -9,7 +9,7 @@ const testimonials = [
     quote:
       "ADÉmaison transformed our house into a home that truly reflects who we are. Their attention to detail and understanding of our lifestyle was remarkable. Every room now tells our story.",
     name: "Adaeze Okonkwo",
-    title: "Residential Client, Lagos",
+    title: "Residential Client, Port Harcourt",
   },
   {
     quote:
@@ -33,7 +33,7 @@ const testimonials = [
     quote:
       "The transformation of our restaurant by ADÉmaison has been incredible. Our customers constantly compliment the ambiance, and we've seen a noticeable increase in repeat visits.",
     name: "Tunde Bakare",
-    title: "Restaurant Owner, Lagos",
+    title: "Restaurant Owner, Port Harcourt",
   },
   {
     quote:

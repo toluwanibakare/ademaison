@@ -51,7 +51,7 @@ const About = () => {
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 Founded with a vision to transform ordinary spaces into
                 extraordinary experiences, ADÉmaison Interior Design has been at
-                the forefront of innovative interior design in Nigeria for over
+                the forefront of innovative interior design in Rivers State, Nigeria for over
                 a decade.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">

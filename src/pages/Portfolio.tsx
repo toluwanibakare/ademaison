@@ -14,7 +14,7 @@ const projects = [
   {
     id: 1,
     image: heroImage,
-    title: "Contemporary Lagos Residence",
+    title: "Contemporary Port Harcourt Residence",
     category: "Residential",
     description:
       "A stunning modern home featuring open-plan living spaces, neutral tones, and carefully curated furnishings that create an atmosphere of refined elegance.",
@@ -22,7 +22,7 @@ const projects = [
   {
     id: 2,
     image: portfolioLiving,
-    title: "Ikoyi Penthouse Living Room",
+    title: "GRA Penthouse Living Room",
     category: "Residential",
     description:
       "An sophisticated living space designed for a discerning client, blending contemporary African aesthetics with timeless luxury elements.",
@@ -30,7 +30,7 @@ const projects = [
   {
     id: 3,
     image: portfolioKitchen,
-    title: "Victoria Island Kitchen",
+    title: "Old GRA Kitchen",
     category: "Residential",
     description:
       "A chef's dream kitchen featuring marble countertops, warm wood cabinetry, and brass fixtures that combine functionality with refined style.",
