@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -10,7 +11,6 @@ const navLinks = [
   { name: "Portfolio", path: "/portfolio" },
   { name: "Why Hire Us", path: "/why-hire-designer" },
   { name: "Testimonials", path: "/testimonials" },
-  { name: "Contact", path: "/contact" },
 ];
 
 const Navbar = () => {
@@ -25,9 +25,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-serif text-primary tracking-tight">
-              ADÉmaison
-            </span>
+            <img
+              src={logo}
+              alt="ADÉmaison Logo"
+              className="h-16 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Users, Clock, Star } from "lucide-react";
+import { ArrowRight, Award, Users, Clock, Star, Home, Building, Ruler } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-living-room.jpg";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
@@ -11,17 +11,17 @@ const services = [
   {
     title: "Residential Design",
     description: "Transform your home into a personalized sanctuary that reflects your lifestyle.",
-    icon: "🏠",
+    icon: <Home className="w-12 h-12" />,
   },
   {
     title: "Commercial Design",
     description: "Create inspiring workspaces that boost productivity and impress clients.",
-    icon: "🏢",
+    icon: <Building className="w-12 h-12" />,
   },
   {
     title: "Space Planning",
     description: "Optimize every square foot with intelligent and functional layouts.",
-    icon: "📐",
+    icon: <Ruler className="w-12 h-12" />,
   },
 ];
 
@@ -212,7 +212,7 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="premium-card text-center"
               >
-                <div className="text-4xl mb-6">{service.icon}</div>
+                <div className="flex justify-center text-4xl mb-6">{service.icon}</div>
                 <h3 className="text-xl font-serif text-foreground mb-4">
                   {service.title}
                 </h3>
