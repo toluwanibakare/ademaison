@@ -104,7 +104,7 @@ const Footer = () => {
               © {currentYear} ADÉmaison Interior Design. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <Link to="/contact" className="text-sm transition-colors duration-200 text-muted">
+              <Link to="https://tmb.it.com" className="text-sm transition-colors duration-200 text-muted">
                 ​Built by TMB    
               </Link>
               

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Play } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
@@ -50,6 +50,21 @@ const projects = [
     category: "Commercial",
     description:
       "A dynamic workspace that balances professionalism with creativity, designed to inspire productivity and collaboration.",
+  },
+];
+
+const projectVideos = [
+  {
+    id: 1,
+    title: "Living Room Transformation",
+    description: "A complete living room makeover from concept to completion.",
+    videoUrl: "", // Placeholder - replace with actual video URL
+  },
+  {
+    id: 2,
+    title: "Modern Kitchen Reveal",
+    description: "Watch the stunning reveal of this contemporary kitchen design.",
+    videoUrl: "", // Placeholder - replace with actual video URL
   },
 ];
 
@@ -206,6 +221,60 @@ const Portfolio = () => {
               <span className="mx-2">/</span>
               <span>{projects.length}</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Gallery Section */}
+      <section className="section-padding bg-primary">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif text-primary-foreground mb-4">
+              Project Videos
+            </h2>
+            <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
+              Watch behind-the-scenes clips and stunning reveals from our recent projects.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {projectVideos.map((video, index) => (
+              <motion.div
+                key={video.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="relative aspect-[9/16] bg-muted rounded-sm overflow-hidden">
+                  {video.videoUrl ? (
+                    <video
+                      src={video.videoUrl}
+                      className="w-full h-full object-cover"
+                      controls
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-secondary/80">
+                      <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                        <Play className="w-8 h-8 text-accent" />
+                      </div>
+                      <p className="text-muted-foreground text-sm">Video coming soon</p>
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-lg font-serif text-primary-foreground mb-1">
+                    {video.title}
+                  </h3>
+                  <p className="text-sm text-primary-foreground/70">
+                    {video.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
