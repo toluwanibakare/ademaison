@@ -1,55 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { submitReview } from "@/api/reviews";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Quote, Send, Star } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { useToast } from "@/hooks/use-toast";
-
-const testimonials = [
-  {
-    quote:
-      "ADÉmaison transformed our house into a home that truly reflects who we are. Their attention to detail and understanding of our lifestyle was remarkable. Every room now tells our story.",
-    name: "Adaeze Okonkwo",
-    title: "Residential Client, Port Harcourt",
-    rating: 5,
-  },
-  {
-    quote:
-      "Working with ADÉmaison was an absolute pleasure. They took our vague ideas and turned them into a stunning reality. The team's professionalism and creativity exceeded our expectations.",
-    name: "Emeka Nwosu",
-    title: "Homeowner, Abuja",
-    rating: 5,
-  },
-  {
-    quote:
-      "Our office space was completely reimagined by ADÉmaison. The new design has significantly improved our team's productivity and morale. Clients are always impressed when they visit.",
-    name: "Olumide Adeyemi",
-    title: "CEO, Tech Startup",
-    rating: 5,
-  },
-  {
-    quote:
-      "I was hesitant about hiring a designer, but ADÉmaison made the process so enjoyable. They listened to every concern and delivered a space that's both beautiful and functional.",
-    name: "Chidinma Eze",
-    title: "Residential Client, Port Harcourt",
-    rating: 4,
-  },
-  {
-    quote:
-      "The transformation of our restaurant by ADÉmaison has been incredible. Our customers constantly compliment the ambiance, and we've seen a noticeable increase in repeat visits.",
-    name: "Tunde Bakare",
-    title: "Restaurant Owner, Port Harcourt",
-    rating: 5,
-  },
-  {
-    quote:
-      "ADÉmaison understood exactly what we needed for our boutique hotel. They created spaces that are both luxurious and welcoming. Our guests love the unique design touches.",
-    name: "Ngozi Okafor",
-    title: "Hospitality Client, Enugu",
-    rating: 5,
-  },
-];
 
 const StarRating = ({ rating, interactive = false, onRatingChange }: { rating: number; interactive?: boolean; onRatingChange?: (rating: number) => void }) => {
   const [hoverRating, setHoverRating] = useState(0);
@@ -81,6 +37,7 @@ const StarRating = ({ rating, interactive = false, onRatingChange }: { rating: n
 
 const Testimonials = () => {
   const { toast } = useToast();
+  const [testimonials, setTestimonials] = useState<any[]>([]);
   const [reviewForm, setReviewForm] = useState({
     name: "",
     title: "",
@@ -89,7 +46,23 @@ const Testimonials = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const averageRating = testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length;
+  // Fetch testimonials from backend
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/reviews`);
+        const data = await res.json();
+        setTestimonials(data);
+      } catch (err) {
+        console.error("Failed to fetch testimonials", err);
+      }
+    };
+    fetchTestimonials();
+  }, []);
+
+  const averageRating = testimonials.length
+    ? testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length
+    : 0;
   const totalReviews = testimonials.length;
 
   const handleReviewChange = (
@@ -105,7 +78,7 @@ const Testimonials = () => {
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (reviewForm.rating === 0) {
       toast({
         title: "Please select a rating",
@@ -114,22 +87,43 @@ const Testimonials = () => {
       });
       return;
     }
-
+  
     setIsSubmitting(true);
-
-    // Simulate submission delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    toast({
-      title: "Thank you for your review",
-      description:
-        "Your testimonial has been submitted and will be reviewed by our team.",
-    });
-
-    setReviewForm({ name: "", title: "", review: "", rating: 0 });
-    setIsSubmitting(false);
+  
+    try {
+      // Call backend API
+      const res = await submitReview({
+        name: reviewForm.name,
+        title: reviewForm.title,
+        review: reviewForm.review,
+        rating: reviewForm.rating,
+        consent_for_publication: false, // admin will approve before publishing
+      });
+  
+      console.log("Review submitted:", res);
+  
+      toast({
+        title: "Thank you for your review",
+        description:
+          "Your testimonial has been submitted and will be reviewed by our team.",
+      });
+  
+      setReviewForm({ name: "", title: "", review: "", rating: 0 });
+    } catch (err: any) {
+      console.error(err);
+      toast({
+        title: "Submission Failed",
+        description: err.message || "Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
+  if (!testimonials.length) {
+    return <p className="text-center text-muted-foreground">No testimonials yet. Be the first to share your experience!</p>;
+  }
+  
   return (
     <Layout>
       <PageHeader
@@ -182,7 +176,7 @@ const Testimonials = () => {
                     <StarRating rating={testimonial.rating} />
                   </div>
                   <p className="text-foreground leading-relaxed mb-6 text-lg italic">
-                    "{testimonial.quote}"
+                    "{testimonial.review}"
                   </p>
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">

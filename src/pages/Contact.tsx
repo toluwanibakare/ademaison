@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
+import { submitContactForm, ContactFormData } from "@/api/contact";
 
 const serviceOptions = [
   "Residential Interior Design",
@@ -38,30 +39,39 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Simulate form submission
-    // Note: For actual email sending, you'll need to enable Lovable Cloud
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    toast({
-      title: "Message Sent Successfully",
-      description: "We'll get back to you within 24-48 hours.",
-    });
-
-    // Reset form after delay
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        service: "",
-        message: "",
+  
+    try {
+      const data: ContactFormData = { ...formData };
+      const res = await submitContactForm(data);
+  
+      console.log("Submitted:", res);
+  
+      setIsSubmitted(true);
+      toast({
+        title: "Message Sent Successfully",
+        description: "We'll get back to you within 24-48 hours.",
       });
-      setIsSubmitted(false);
-    }, 3000);
+  
+      // Reset form after delay
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (err: any) {
+      console.error(err);
+      toast({
+        title: "Submission Failed",
+        description: err.message || "Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
