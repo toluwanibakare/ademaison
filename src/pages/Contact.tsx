@@ -4,7 +4,6 @@ import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
-import { submitContactForm, ContactFormData } from "@/api/contact";
 
 const serviceOptions = [
   "Residential Interior Design",
@@ -39,19 +38,31 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
-      const data: ContactFormData = { ...formData };
-      const res = await submitContactForm(data);
-  
-      console.log("Submitted:", res);
-  
+      const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+      
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to send message");
+      }
+
       setIsSubmitted(true);
+      
       toast({
         title: "Message Sent Successfully",
         description: "We'll get back to you within 24-48 hours.",
       });
-  
+
       // Reset form after delay
       setTimeout(() => {
         setFormData({
@@ -63,11 +74,13 @@ const Contact = () => {
         });
         setIsSubmitted(false);
       }, 3000);
-    } catch (err: any) {
-      console.error(err);
+
+    } catch (error) {
+      console.error("Contact form error:", error);
       toast({
-        title: "Submission Failed",
-        description: err.message || "Please try again later.",
+        title: "Error Sending Message",
+        description: error instanceof Error ? error.message : "Please try again later.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
@@ -120,6 +133,13 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-foreground mb-1">Email</h4>
+                      <a
+                        href="mailto:contact@ademaisoninteriors.com"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        contact@ademaisoninteriors.com
+                      </a>
+                      <br />
                       <a
                         href="mailto:adeleyetola@yahoo.com"
                         className="text-muted-foreground hover:text-primary transition-colors"

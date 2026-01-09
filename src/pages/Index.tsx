@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Users, Clock, Star, Home, Building, Ruler } from "lucide-react";
@@ -6,6 +7,8 @@ import heroImage from "@/assets/hero-living-room.jpg";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
 import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
 import portfolioBedroom from "@/assets/portfolio-bedroom.jpg";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const services = [
   {
@@ -25,13 +28,6 @@ const services = [
   },
 ];
 
-const stats = [
-  { value: "150+", label: "Projects Completed", icon: Award },
-  { value: "10+", label: "Years Experience", icon: Clock },
-  { value: "200+", label: "Happy Clients", icon: Users },
-  { value: "5.0", label: "Client Rating", icon: Star },
-];
-
 const portfolioPreview = [
   { image: portfolioLiving, title: "Modern Living Room" },
   { image: portfolioKitchen, title: "Luxury Kitchen" },
@@ -39,6 +35,38 @@ const portfolioPreview = [
 ];
 
 const Index = () => {
+  const [stats, setStats] = useState([
+    { value: "150+", label: "Projects Completed", icon: Award },
+    { value: "10+", label: "Years Experience", icon: Clock },
+    { value: "0", label: "Happy Clients", icon: Users },
+    { value: "0.0", label: "Client Rating", icon: Star },
+  ]);
+
+  useEffect(() => {
+    const fetchRatingSummary = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/testimonials/summary`);
+        const data = await response.json();
+        
+        if (data.success) {
+          setStats(prev => prev.map(stat => {
+            if (stat.label === "Happy Clients") {
+              return { ...stat, value: data.summary.totalReviews.toString() };
+            }
+            if (stat.label === "Client Rating") {
+              return { ...stat, value: data.summary.averageRating };
+            }
+            return stat;
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching rating summary:", error);
+      }
+    };
+
+    fetchRatingSummary();
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section */}
