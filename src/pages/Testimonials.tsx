@@ -1,41 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Quote, Send, Star } from "lucide-react";
+import { ArrowRight, Quote, Send, Star, Loader2 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { useToast } from "@/hooks/use-toast";
-const testimonials = [{
-  quote: "ADÉmaison transformed our house into a home that truly reflects who we are. Their attention to detail and understanding of our lifestyle was remarkable. Every room now tells our story.",
-  name: "Adaeze Okonkwo",
-  title: "Residential Client, Port Harcourt",
-  rating: 5
-}, {
-  quote: "Working with ADÉmaison was an absolute pleasure. They took our vague ideas and turned them into a stunning reality. The team's professionalism and creativity exceeded our expectations.",
-  name: "Emeka Nwosu",
-  title: "Homeowner, Abuja",
-  rating: 5
-}, {
-  quote: "Our office space was completely reimagined by ADÉmaison. The new design has significantly improved our team's productivity and morale. Clients are always impressed when they visit.",
-  name: "Olumide Adeyemi",
-  title: "CEO, Tech Startup",
-  rating: 5
-}, {
-  quote: "I was hesitant about hiring a designer, but ADÉmaison made the process so enjoyable. They listened to every concern and delivered a space that's both beautiful and functional.",
-  name: "Chidinma Eze",
-  title: "Residential Client, Port Harcourt",
-  rating: 4
-}, {
-  quote: "The transformation of our restaurant by ADÉmaison has been incredible. Our customers constantly compliment the ambiance, and we've seen a noticeable increase in repeat visits.",
-  name: "Tunde Bakare",
-  title: "Restaurant Owner, Port Harcourt",
-  rating: 5
-}, {
-  quote: "ADÉmaison understood exactly what we needed for our boutique hotel. They created spaces that are both luxurious and welcoming. Our guests love the unique design touches.",
-  name: "Ngozi Okafor",
-  title: "Hospitality Client, Enugu",
-  rating: 5
-}];
+import { getTestimonials, getRatingSummary, submitTestimonial, Testimonial, RatingSummary } from "@/api/testimonials";
+
 const StarRating = ({
   rating,
   interactive = false,
@@ -52,10 +23,12 @@ const StarRating = ({
         </button>)}
     </div>;
 };
+
 const Testimonials = () => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [summary, setSummary] = useState<RatingSummary>({ totalReviews: 0, averageRating: "0.0" });
+  const [isLoading, setIsLoading] = useState(true);
   const [reviewForm, setReviewForm] = useState({
     name: "",
     title: "",
@@ -63,24 +36,46 @@ const Testimonials = () => {
     rating: 0
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const averageRating = testimonials.reduce((acc, t) => acc + t.rating, 0) / testimonials.length;
-  const totalReviews = testimonials.length;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [testimonialsRes, summaryRes] = await Promise.all([
+          getTestimonials(),
+          getRatingSummary()
+        ]);
+        
+        if (testimonialsRes.success) {
+          setTestimonials(testimonialsRes.testimonials);
+        }
+        if (summaryRes.success) {
+          setSummary(summaryRes.summary);
+        }
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {
-      name,
-      value
-    } = e.target;
+    const { name, value } = e.target;
     setReviewForm(prev => ({
       ...prev,
       [name]: value
     }));
   };
+
   const handleRatingChange = (rating: number) => {
     setReviewForm(prev => ({
       ...prev,
       rating
     }));
   };
+
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (reviewForm.rating === 0) {
@@ -93,20 +88,32 @@ const Testimonials = () => {
     }
     setIsSubmitting(true);
 
-    // Simulate submission delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast({
-      title: "Thank you for your review",
-      description: "Your testimonial has been submitted and will be reviewed by our team."
-    });
-    setReviewForm({
-      name: "",
-      title: "",
-      review: "",
-      rating: 0
-    });
-    setIsSubmitting(false);
+    try {
+      const response = await submitTestimonial(reviewForm);
+      
+      if (response.success) {
+        toast({
+          title: "Thank you for your review!",
+          description: response.message
+        });
+        setReviewForm({
+          name: "",
+          title: "",
+          review: "",
+          rating: 0
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   return <Layout>
       <PageHeader title="Client Testimonials" subtitle="Hear what our valued clients have to say about their experience with ADÉmaison." breadcrumbs={[{
       label: "Testimonials"
@@ -125,15 +132,15 @@ const Testimonials = () => {
           once: true
         }} className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
             <div className="text-center">
-              <p className="text-5xl font-serif text-foreground mb-2">{averageRating.toFixed(1)}</p>
+              <p className="text-5xl font-serif text-foreground mb-2">{summary.averageRating}</p>
               <div className="flex justify-center mb-2">
-                <StarRating rating={Math.round(averageRating)} />
+                <StarRating rating={Math.round(parseFloat(summary.averageRating))} />
               </div>
               <p className="text-muted-foreground text-sm">Overall Rating</p>
             </div>
             <div className="h-16 w-px bg-border hidden md:block" />
             <div className="text-center">
-              <p className="text-5xl font-serif text-foreground mb-2">{totalReviews}</p>
+              <p className="text-5xl font-serif text-foreground mb-2">{summary.totalReviews}</p>
               <p className="text-muted-foreground text-sm">Reviews</p>
             </div>
           </motion.div>
@@ -143,90 +150,104 @@ const Testimonials = () => {
       {/* Testimonials Grid */}
       <section className="section-padding bg-background">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-            {testimonials.map((testimonial, index) => <motion.div key={index} initial={{
-            opacity: 0,
-            y: 30
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true
-          }} transition={{
-            duration: 0.5,
-            delay: index * 0.1
-          }} className="premium-card relative">
-                <Quote className="absolute top-6 right-6 w-10 h-10 text-accent/20" />
-                <div className="relative">
-                  <div className="mb-4">
-                    <StarRating rating={testimonial.rating} />
-                  </div>
-                  <p className="text-foreground leading-relaxed mb-6 text-lg italic">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
-                      <span className="text-xl font-serif text-accent">
-                        {testimonial.name.charAt(0)}
-                      </span>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-10 h-10 animate-spin text-accent" />
+            </div>
+          ) : testimonials.length === 0 ? (
+            <div className="text-center py-20">
+              <Quote className="w-16 h-16 mx-auto mb-6 text-muted-foreground/30" />
+              <h3 className="text-2xl font-serif text-foreground mb-4">No Reviews Yet</h3>
+              <p className="text-muted-foreground max-w-md mx-auto">
+                We don't have any reviews at the moment. Be the first to share your experience with ADÉmaison!
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+              {testimonials.map((testimonial, index) => <motion.div key={testimonial.id} initial={{
+              opacity: 0,
+              y: 30
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} viewport={{
+              once: true
+            }} transition={{
+              duration: 0.5,
+              delay: index * 0.1
+            }} className="premium-card relative">
+                  <Quote className="absolute top-6 right-6 w-10 h-10 text-accent/20" />
+                  <div className="relative">
+                    <div className="mb-4">
+                      <StarRating rating={testimonial.rating} />
                     </div>
-                    <div>
-                      <h4 className="font-medium text-foreground">
-                        {testimonial.name}
-                      </h4>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.title}
-                      </p>
+                    <p className="text-foreground leading-relaxed mb-6 text-lg italic">
+                      "{testimonial.quote}"
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
+                        <span className="text-xl font-serif text-accent">
+                          {testimonial.name.charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-foreground">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.title}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>)}
-          </div>
+                </motion.div>)}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Featured Testimonial */}
-      <section className="section-padding bg-primary">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <Quote className="w-16 h-16 mx-auto mb-8 text-gold/40" />
-            <div className="flex justify-center mb-6">
-              <StarRating rating={5} />
+      {/* Featured Testimonial - Only show if we have testimonials */}
+      {testimonials.length > 0 && (
+        <section className="section-padding bg-primary">
+          <div className="container mx-auto">
+            <div className="max-w-4xl mx-auto text-center">
+              <Quote className="w-16 h-16 mx-auto mb-8 text-gold/40" />
+              <div className="flex justify-center mb-6">
+                <StarRating rating={testimonials[0]?.rating || 5} />
+              </div>
+              <motion.blockquote initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} viewport={{
+              once: true
+            }} className="text-2xl md:text-3xl font-serif text-primary-foreground leading-relaxed mb-8 italic">
+                "{testimonials[0]?.quote}"
+              </motion.blockquote>
+              <motion.div initial={{
+              opacity: 0,
+              y: 20
+            }} whileInView={{
+              opacity: 1,
+              y: 0
+            }} viewport={{
+              once: true
+            }} transition={{
+              delay: 0.2
+            }}>
+                <p className="text-primary-foreground font-medium text-lg">
+                  {testimonials[0]?.name}
+                </p>
+                <p className="text-primary-foreground/70">
+                  {testimonials[0]?.title}
+                </p>
+              </motion.div>
             </div>
-            <motion.blockquote initial={{
-            opacity: 0,
-            y: 20
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true
-          }} className="text-2xl md:text-3xl font-serif text-primary-foreground leading-relaxed mb-8 italic">
-              "Choosing ADÉmaison was the best decision we made for our home.
-              Their team brought a level of expertise and creativity that
-              transformed our living space beyond what we imagined possible."
-            </motion.blockquote>
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true
-          }} transition={{
-            delay: 0.2
-          }}>
-              <p className="text-primary-foreground font-medium text-lg">
-                The Adeleke Family
-              </p>
-              <p className="text-primary-foreground/70">
-                Complete Home Renovation, Victoria Island
-              </p>
-            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Submit a Review Section */}
       <section className="section-padding bg-secondary/50">

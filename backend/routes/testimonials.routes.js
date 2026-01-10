@@ -23,4 +23,10 @@ router.post(
   testimonialsController.submitTestimonial
 );
 
+// Approve a testimonial (via email link)
+router.get("/:id/approve", testimonialsController.approveTestimonial);
+
+// Reject a testimonial (via email link)
+router.get("/:id/reject", testimonialsController.rejectTestimonial);
+
 module.exports = router;

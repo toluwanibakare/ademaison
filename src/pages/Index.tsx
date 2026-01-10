@@ -7,8 +7,7 @@ import heroImage from "@/assets/hero-living-room.jpg";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
 import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
 import portfolioBedroom from "@/assets/portfolio-bedroom.jpg";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import { getRatingSummary } from "@/api/testimonials";
 
 const services = [
   {
@@ -45,8 +44,7 @@ const Index = () => {
   useEffect(() => {
     const fetchRatingSummary = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/testimonials/summary`);
-        const data = await response.json();
+        const data = await getRatingSummary();
         
         if (data.success) {
           setStats(prev => prev.map(stat => {
