@@ -37,7 +37,7 @@ const Index = () => {
   const [stats, setStats] = useState([
     { value: "150+", label: "Projects Completed", icon: Award },
     { value: "10+", label: "Years Experience", icon: Clock },
-    { value: "0", label: "Happy Clients", icon: Users },
+    { value: "0", label: "Reviews", icon: Users },
     { value: "0.0", label: "Client Rating", icon: Star },
   ]);
 

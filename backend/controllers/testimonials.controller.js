@@ -2,7 +2,7 @@ const db = require("../config/db");
 const transporter = require("../config/mail");
 const { validationResult } = require("express-validator");
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "adeleyetola@yahoo.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "contact@ademaisoninteriors.com";
 const SITE_URL = process.env.SITE_URL || "http://localhost:5000";
 
 // Get all approved testimonials
