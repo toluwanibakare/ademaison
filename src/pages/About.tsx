@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Target, Heart, Eye } from "lucide-react";
+import { ArrowRight, Target, Gem, Shield } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
@@ -14,16 +14,16 @@ const values = [
       "Every detail matters. We approach each project with meticulous attention to ensure perfection in every corner.",
   },
   {
-    icon: Heart,
-    title: "Passion",
+    icon: Gem,
+    title: "Elegance",
     description:
-      "Design is our calling. We pour creativity and enthusiasm into every space we transform.",
+      "Beauty in simplicity. We craft spaces that exude timeless sophistication and refined taste.",
   },
   {
-    icon: Eye,
-    title: "Vision",
+    icon: Shield,
+    title: "Integrity",
     description:
-      "We see beyond the ordinary, envisioning possibilities that turn your dreams into reality.",
+      "Trust is our foundation. We uphold honesty and transparency in every client relationship.",
   },
 ];
 
@@ -32,7 +32,7 @@ const About = () => {
     <Layout>
       <PageHeader
         title="About ADÉmaison"
-        subtitle="Discover the passion and expertise behind our award-winning interior design studio."
+        subtitle="Precision in Design. Elegance Defined by Integrity."
         breadcrumbs={[{ label: "About" }]}
       />
 
@@ -49,23 +49,30 @@ const About = () => {
             >
               <h2 className="section-title mb-6">Our Story</h2>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Founded with a vision to transform ordinary spaces into
-                extraordinary experiences, ADÉmaison Interior Design has been at
-                the forefront of innovative interior design in Rivers State, Nigeria for over
-                a decade.
+              Adémaison was founded from a simple but defining moment in 2015, 
+              when a family friend entrusted the brand’s founder with styling 
+              a two bedroom apartment. What began as a personal favor quickly 
+              revealed a natural talent for transforming spaces, resulting in 
+              a project that exceeded expectations and sparked a deeper passion 
+              for interior decoration.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Our journey began with a simple belief: that thoughtfully
-                designed spaces have the power to enhance lives, inspire
-                creativity, and create lasting impressions. Today, we continue
-                to uphold this philosophy in every project we undertake.
+              Over the years, this passion evolved into a professional practice, 
+              with experience spanning residential styling, space planning, and 
+              interior consultations. The brand name Adémaison was officially 
+              established in 2025 to represent this growth, vision, and commitment 
+              to refined living.
+              </p>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+              Today, Adémaison delivers thoughtful interior decoration solutions 
+              shaped by both local insight and international exposure. Through 
+              consultations and projects connected to France, Qatar, Port Harcourt, 
+              and London, the brand brings a global perspective to creating warm, 
+              functional, and beautifully styled spaces.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                From intimate residential spaces to grand commercial
-                establishments, our portfolio reflects our commitment to
-                excellence, creativity, and client satisfaction. We take pride
-                in understanding each client's unique vision and translating it
-                into spaces that exceed expectations.
+              At its core, Adémaison is driven by the belief that every space 
+              should feel intentional, personal, and truly lived in.  
               </p>
             </motion.div>
             <motion.div
@@ -83,7 +90,7 @@ const About = () => {
                     className="w-full h-[400px] lg:h-[500px] object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 border-4 border-accent rounded-sm hidden lg:block" />
+                
               </div>
             </motion.div>
           </div>
@@ -187,7 +194,7 @@ const About = () => {
               <h2 className="section-title mb-6">Our Approach</h2>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 We believe that great design emerges from deep collaboration. Our
-                process begins with understanding you—your lifestyle, preferences,
+                process begins with understanding you, your lifestyle, preferences,
                 aspirations, and practical needs. This foundation allows us to
                 create spaces that are authentically yours.
               </p>

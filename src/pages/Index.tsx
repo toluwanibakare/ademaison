@@ -48,7 +48,7 @@ const Index = () => {
         
         if (data.success) {
           setStats(prev => prev.map(stat => {
-            if (stat.label === "Happy Clients") {
+            if (stat.label === "Reviews") {
               return { ...stat, value: data.summary.totalReviews.toString() };
             }
             if (stat.label === "Client Rating") {

@@ -1,73 +1,34 @@
-# Welcome to your Lovable project
+# ADÉmaison Interior Design
 
-## Project info
+A premium interior design studio website showcasing bespoke design services in Rivers State, Nigeria.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Live Site:** [ademaisoninteriors.com](https://ademaisoninteriors.com)
 
-## How can I edit this code?
+## About
 
-There are several ways of editing your application.
+ADÉmaison Interior Design transforms ordinary spaces into extraordinary experiences. With over a decade of expertise in residential and commercial design, they deliver personalized design solutions that reflect clients' unique visions.
 
-**Use Lovable**
+**Tagline:** *Precision in Design. Elegance Defined by Integrity.*
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Pages
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Home** - Hero section, stats, services preview, portfolio highlights, and call-to-action
+- **About** - Company story, mission, core values (Precision, Elegance, Integrity), and approach
+- **Services** - Full list of interior design services offered
+- **Portfolio** - Showcase of completed projects with image slideshow
+- **Why Hire Us** - Benefits of working with a professional interior designer
+- **Testimonials** - Client reviews and rating system with submission form
+- **Contact** - Contact form, business hours, location, and WhatsApp integration
 
-**Use your preferred IDE**
+## Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
+- React + TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
 - Tailwind CSS
+- Framer Motion
+- Node.js/Express Backend
+- MySQL Database
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Built by [TMB](https://tmb.it.com)**
