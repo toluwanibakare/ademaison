@@ -12,25 +12,25 @@ import heroImage from "@/assets/hero-living-room.jpg";
 const projects = [{
   id: 1,
   image: heroImage,
-  title: "Contemporary Port Harcourt Residence",
+  title: "Contemporary Residence",
   category: "Residential",
   description: "A stunning modern home featuring open-plan living spaces, neutral tones, and carefully curated furnishings that create an atmosphere of refined elegance."
 }, {
   id: 2,
   image: portfolioLiving,
-  title: "GRA Penthouse Living Room",
+  title: "Penthouse Living Room",
   category: "Residential",
   description: "An sophisticated living space designed for a discerning client, blending contemporary African aesthetics with timeless luxury elements."
 }, {
   id: 3,
   image: portfolioKitchen,
-  title: "Old GRA Kitchen",
+  title: "Old Kitchen Setup",
   category: "Residential",
   description: "A chef's dream kitchen featuring marble countertops, warm wood cabinetry, and brass fixtures that combine functionality with refined style."
 }, {
   id: 4,
   image: portfolioBedroom,
-  title: "Serene Master Suite",
+  title: "Masters Bedroom",
   category: "Residential",
   description: "A tranquil bedroom retreat designed for ultimate relaxation, featuring soft textures, ambient lighting, and a calming neutral palette."
 }, {
