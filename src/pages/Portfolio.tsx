@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ArrowRight, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
@@ -9,6 +9,16 @@ import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
 import portfolioBedroom from "@/assets/portfolio-bedroom.jpg";
 import portfolioOffice from "@/assets/portfolio-office.jpg";
 import heroImage from "@/assets/hero-living-room.jpg";
+import designedHouseVideo from "@/assets/videos/designed_house.mp4";
+import diningVideo from "@/assets/videos/dining.mp4";
+import fullHouseVideo from "@/assets/videos/full_house.mp4";
+import modernDesignVideo from "@/assets/videos/modern_design.mp4";
+import livingRoomVideo from "@/assets/videos/living_room.mp4";
+import anteRoomVideo from "@/assets/videos/ante_room.mp4";
+import mastersBedroomVideo from "@/assets/videos/masters_bedroom.mp4";
+import bedroomVideo from "@/assets/videos/bedroom.mp4";
+import kitchenVideo from "@/assets/videos/kitchen.mp4";
+
 const projects = [{
   id: 1,
   image: heroImage,
@@ -40,18 +50,22 @@ const projects = [{
   category: "Commercial",
   description: "A dynamic workspace that balances professionalism with creativity, designed to inspire productivity and collaboration."
 }];
-const projectVideos = [{
-  id: 1,
-  title: "Living Room Transformation",
-  description: "A complete living room makeover from concept to completion.",
-  videoUrl: "" // Placeholder - replace with actual video URL
-}, {
-  id: 2,
-  title: "Modern Kitchen Reveal",
-  description: "Watch the stunning reveal of this contemporary kitchen design.",
-  videoUrl: "" // Placeholder - replace with actual video URL
-}];
+
+const projectVideos = [
+  designedHouseVideo,
+  diningVideo,
+  mordernDesignVideo,
+  fullHouseVideo,
+  livingRoomVideo,
+  anteRoomVideo,
+  mastersBedroomVideo,
+  bedroomVideo,
+  kitchenVideo
+];
+
 const Portfolio = () => {
+  const [videoIndex, setVideoIndex] = useState(0);
+  const videoContainerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const slideVariants = {
@@ -185,47 +199,66 @@ const Portfolio = () => {
       </section>
 
       {/* Video Gallery Section */}
-      <section className="section-padding bg-primary">
+      <section className="py-12 bg-primary">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif text-primary-foreground mb-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-serif text-primary-foreground">
               Project Videos
             </h2>
-            <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-              Watch behind-the-scenes clips and stunning reveals from our recent projects.
-            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {projectVideos.map((video, index) => <motion.div key={video.id} initial={{
-            opacity: 0,
-            y: 30
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true
-          }} transition={{
-            duration: 0.5,
-            delay: index * 0.1
-          }} className="group">
-                <div className="relative aspect-[9/16] bg-muted rounded-sm overflow-hidden">
-                  {video.videoUrl ? <video src={video.videoUrl} className="w-full h-full object-cover" controls playsInline preload="metadata" /> : <div className="w-full h-full flex flex-col items-center justify-center bg-secondary/80">
-                      <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mb-4">
-                        <Play className="w-8 h-8 text-accent" />
-                      </div>
-                      <p className="text-muted-foreground text-sm">Video coming soon</p>
-                    </div>}
-                </div>
-                <div className="mt-4">
-                  <h3 className="text-lg font-serif text-primary-foreground mb-1">
-                    {video.title}
-                  </h3>
-                  <p className="text-sm text-primary-foreground/70">
-                    {video.description}
-                  </p>
-                </div>
-              </motion.div>)}
+          <div className="relative">
+            {/* Navigation Arrows - Desktop only */}
+            <button
+              onClick={() => {
+                if (videoContainerRef.current) {
+                  videoContainerRef.current.scrollBy({ left: -280, behavior: 'smooth' });
+                }
+              }}
+              className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center bg-background/90 hover:bg-background text-foreground rounded-full shadow-lg transition-colors duration-200"
+              aria-label="Previous video"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => {
+                if (videoContainerRef.current) {
+                  videoContainerRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+                }
+              }}
+              className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center bg-background/90 hover:bg-background text-foreground rounded-full shadow-lg transition-colors duration-200"
+              aria-label="Next video"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* Scrollable Video Container */}
+            <div
+              ref={videoContainerRef}
+              className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-4 md:px-12 pb-4"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {projectVideos.map((videoUrl, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="flex-shrink-0 snap-center"
+                >
+                  <div className="relative w-[200px] md:w-[240px] aspect-[9/16] bg-muted rounded-sm overflow-hidden">
+                    <video
+                      src={videoUrl}
+                      className="w-full h-full object-cover"
+                      controls
+                      playsInline
+                      preload="metadata"
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

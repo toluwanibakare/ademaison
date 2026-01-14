@@ -116,11 +116,9 @@ const About = () => {
               transition={{ delay: 0.1 }}
               className="text-xl text-primary-foreground/90 leading-relaxed"
             >
-              To create exceptional interior spaces that harmonize aesthetics
-              with functionality, reflect our clients' personalities, and stand
-              the test of time. We are committed to delivering personalized
-              design solutions that transform how people live, work, and
-              experience their environments.
+              To create exceptional interior spaces that reflect refined elegance and timeless beauty, 
+              guided by a commitment to integrity, attention to detail, and the highest standards of design 
+              excellence. We transform visions into environments that inspire, comfort, and elevate everyday living.
             </motion.p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Users, Clock, Star, Home, Building, Ruler } from "lucide-react";
+import { ArrowRight, Globe, Users, Clock, Star, Home, Building, Ruler } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroImage from "@/assets/hero-living-room.jpg";
 import portfolioLiving from "@/assets/portfolio-living.jpg";
@@ -35,7 +35,7 @@ const portfolioPreview = [
 
 const Index = () => {
   const [stats, setStats] = useState([
-    { value: "150+", label: "Projects Completed", icon: Award },
+    { value: "4+", label: "Countries", icon: Globe },
     { value: "10+", label: "Years Experience", icon: Clock },
     { value: "0", label: "Reviews", icon: Users },
     { value: "0.0", label: "Client Rating", icon: Star },
