@@ -1,8 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-const db = require('../config/db'); // Adjust if missing
-
-// Note: Ensure the db module (connection pool) is properly set up in config/database.js
+const db = require('../config/db');
 
 // Admin creates a blog
 exports.createBlog = async (req, res) => {
@@ -18,7 +14,7 @@ exports.createBlog = async (req, res) => {
 
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
-    const [result] = await db.execute(
+    const [result] = await db.promise().execute(
       'INSERT INTO blogs (title, slug, body, cover_image, is_published, published_at) VALUES (?, ?, ?, ?, ?, ?)',
       [title, slug, body, cover_image, is_published || false, is_published ? new Date() : null]
     );
@@ -33,7 +29,7 @@ exports.createBlog = async (req, res) => {
 // Get all blogs (public)
 exports.getBlogs = async (req, res) => {
   try {
-    const [blogs] = await db.execute(
+    const [blogs] = await db.promise().execute(
       'SELECT id, title, slug, cover_image, views, likes, published_at FROM blogs WHERE is_published = TRUE ORDER BY published_at DESC'
     );
     res.status(200).json({ success: true, data: blogs });
@@ -48,16 +44,16 @@ exports.getBlogBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
     
-    const [blogs] = await db.execute('SELECT * FROM blogs WHERE slug = ? AND is_published = TRUE', [slug]);
+    const [blogs] = await db.promise().execute('SELECT * FROM blogs WHERE slug = ? AND is_published = TRUE', [slug]);
     if (blogs.length === 0) {
       return res.status(404).json({ success: false, message: 'Blog not found' });
     }
     
     // Update views
-    await db.execute('UPDATE blogs SET views = views + 1 WHERE id = ?', [blogs[0].id]);
+    await db.promise().execute('UPDATE blogs SET views = views + 1 WHERE id = ?', [blogs[0].id]);
     
     // Fetch comments
-    const [comments] = await db.execute('SELECT id, user_name, comment, created_at FROM blog_comments WHERE blog_id = ? AND is_approved = TRUE ORDER BY created_at DESC', [blogs[0].id]);
+    const [comments] = await db.promise().execute('SELECT id, user_name, comment, created_at FROM blog_comments WHERE blog_id = ? AND is_approved = TRUE ORDER BY created_at DESC', [blogs[0].id]);
 
     const blogData = { ...blogs[0], views: blogs[0].views + 1, comments };
     res.status(200).json({ success: true, data: blogData });
@@ -71,7 +67,7 @@ exports.getBlogBySlug = async (req, res) => {
 exports.likeBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    await db.execute('UPDATE blogs SET likes = likes + 1 WHERE id = ?', [id]);
+    await db.promise().execute('UPDATE blogs SET likes = likes + 1 WHERE id = ?', [id]);
     res.status(200).json({ success: true, message: 'Blog liked' });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Internal server error' });
@@ -84,7 +80,7 @@ exports.addComment = async (req, res) => {
     const { id } = req.params;
     const { user_name, user_email, comment } = req.body;
     
-    await db.execute(
+    await db.promise().execute(
       'INSERT INTO blog_comments (blog_id, user_name, user_email, comment) VALUES (?, ?, ?, ?)',
       [id, user_name, user_email, comment]
     );

@@ -1,40 +1,29 @@
-const API_BASE_URL = "http://localhost:5000/api";
+import { apiClient } from "./client";
 
 export const getBlogs = async () => {
-    const response = await fetch(`${API_BASE_URL}/blogs`);
-    return response.json();
+    return apiClient<any>("/api/blogs");
 };
 
 export const getBlogBySlug = async (slug: string) => {
-    const response = await fetch(`${API_BASE_URL}/blogs/${slug}`);
-    return response.json();
+    return apiClient<any>(`/api/blogs/${slug}`);
 };
 
 export const createBlog = async (blogData: any) => {
-    const response = await fetch(`${API_BASE_URL}/blogs`, {
+    return apiClient<any>("/api/blogs", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(blogData),
     });
-    return response.json();
 };
 
 export const likeBlog = async (blogId: number) => {
-    const response = await fetch(`${API_BASE_URL}/blogs/${blogId}/like`, {
+    return apiClient<any>(`/api/blogs/${blogId}/like`, {
         method: "POST",
     });
-    return response.json();
 };
 
 export const addComment = async (blogId: number, commentData: any) => {
-    const response = await fetch(`${API_BASE_URL}/blogs/${blogId}/comments`, {
+    return apiClient<any>(`/api/blogs/${blogId}/comments`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(commentData),
     });
-    return response.json();
 };

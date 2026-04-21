@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import Layout from "../components/layout/Layout";
 import PageHeader from "../components/layout/PageHeader";
+import { submitContactForm } from "../api/contact";
 
 const serviceOptions = [
   "Residential Interior Design",
@@ -40,21 +41,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-      
-      const response = await fetch(`${API_URL}/api/contact`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to send message");
-      }
+      await submitContactForm(formData);
 
       setIsSubmitted(true);
       

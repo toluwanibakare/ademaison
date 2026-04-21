@@ -10,6 +10,7 @@ import portfolioBedroom from "../assets/portfolio-bedroom.jpg";
 import diningFull from "../assets/dining-room-full.jpg";
 import accentChair from "../assets/accent-chair.jpg";
 import wallArt from "../assets/wall-art-setup.jpg";
+import { getBlogs } from "../api/blogs";
 import { getRatingSummary } from "../api/testimonials";
 
 const services = [
@@ -98,8 +99,7 @@ const Index = () => {
 
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/blogs");
-        const data = await res.json();
+        const data = await getBlogs();
         if (data.success) {
           setDynamicBlogs(data.data.slice(0, 3));
         }
