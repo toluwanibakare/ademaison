@@ -382,3 +382,43 @@ BEGIN
     SET NEW.updated_at = NOW();
 END //
 DELIMITER ;
+
+-- =============================================
+-- 7. BLOG SYSTEM TABLES
+-- =============================================
+-- (Start of blog updates)
+-- Please copy and paste from this point into your MySQL database to create the new blog tables
+
+CREATE TABLE blogs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    body TEXT NOT NULL,
+    cover_image VARCHAR(255),
+    views INT DEFAULT 0,
+    likes INT DEFAULT 0,
+    is_published BOOLEAN DEFAULT FALSE,
+    published_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    INDEX idx_slug (slug),
+    INDEX idx_published_at (published_at),
+    INDEX idx_is_published (is_published)
+);
+
+CREATE TABLE blog_comments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    blog_id INT NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NULL,
+    comment TEXT NOT NULL,
+    is_approved BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE,
+    INDEX idx_blog_id (blog_id),
+    INDEX idx_is_approved (is_approved)
+);
+
+-- (End of blog updates)

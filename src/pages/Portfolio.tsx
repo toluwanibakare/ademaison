@@ -9,10 +9,15 @@ import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
 import portfolioBedroom from "@/assets/portfolio-bedroom.jpg";
 import portfolioOffice from "@/assets/portfolio-office.jpg";
 import heroImage from "@/assets/hero-living-room.jpg";
+import diningFull from "@/assets/dining-room-full.jpg";
+import accentChair from "@/assets/accent-chair.jpg";
+import wallArt from "@/assets/wall-art-setup.jpg";
+import decorDetail from "@/assets/decor-setup.jpg";
+import tvSetting from "@/assets/tv-setting.jpg";
 import designedHouseVideo from "@/assets/videos/designed_house.mp4";
 import diningVideo from "@/assets/videos/dining.mp4";
 import fullHouseVideo from "@/assets/videos/full_house.mp4";
-import modernDesignVideo from "@/assets/videos/modern_design.mp4";
+// import modernDesignVideo from "@/assets/videos/modern_design.mp4";
 import livingRoomVideo from "@/assets/videos/living_room.mp4";
 import anteRoomVideo from "@/assets/videos/ante_room.mp4";
 import mastersBedroomVideo from "@/assets/videos/masters_bedroom.mp4";
@@ -21,10 +26,10 @@ import kitchenVideo from "@/assets/videos/kitchen.mp4";
 
 const projects = [{
   id: 1,
-  image: heroImage,
-  title: "Contemporary Residence",
+  image: diningFull,
+  title: "Signature Dining Room",
   category: "Residential",
-  description: "A stunning modern home featuring open-plan living spaces, neutral tones, and carefully curated furnishings that create an atmosphere of refined elegance."
+  description: "A sophisticated dining space featuring a grand table, designer lighting, and a perfectly balanced aesthetic for the ultimate gathering experience."
 }, {
   id: 2,
   image: portfolioLiving,
@@ -33,28 +38,46 @@ const projects = [{
   description: "An sophisticated living space designed for a discerning client, blending contemporary African aesthetics with timeless luxury elements."
 }, {
   id: 3,
-  image: portfolioKitchen,
-  title: "Old Kitchen Setup",
+  image: accentChair,
+  title: "Minimalist Reading Nook",
   category: "Residential",
-  description: "A chef's dream kitchen featuring marble countertops, warm wood cabinetry, and brass fixtures that combine functionality with refined style."
+  description: "A curated corner for relaxation, featuring an iconic armchair and vibrant greenery that brings life to a modern minimalist space."
 }, {
   id: 4,
+  image: wallArt,
+  title: "Artistic Living Corner",
+  category: "Residential",
+  description: "Thoughtfully composed wall art and plush seating that transform a simple corner into a centered focal point of the home."
+}, {
+  id: 5,
   image: portfolioBedroom,
   title: "Masters Bedroom",
   category: "Residential",
   description: "A tranquil bedroom retreat designed for ultimate relaxation, featuring soft textures, ambient lighting, and a calming neutral palette."
 }, {
-  id: 5,
+  id: 6,
+  image: decorDetail,
+  title: "Modern Decor Detail",
+  category: "Residential",
+  description: "It's all in the details. Carefully selected accessories and lighting that elevate the everyday to the extraordinary."
+}, {
+  id: 7,
   image: portfolioOffice,
   title: "Corporate Office Design",
   category: "Commercial",
   description: "A dynamic workspace that balances professionalism with creativity, designed to inspire productivity and collaboration."
+}, {
+  id: 8,
+  image: tvSetting,
+  title: "Media Lounge Gallery",
+  category: "Residential",
+  description: "A perfectly balanced entertainment zone where technology meets comfort, featuring clean lines and warm textures for the ultimate home cinema experience."
 }];
 
 const projectVideos = [
   designedHouseVideo,
   diningVideo,
-  mordernDesignVideo,
+  // mordernDesignVideo,
   fullHouseVideo,
   livingRoomVideo,
   anteRoomVideo,

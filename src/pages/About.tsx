@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Target, Gem, Shield } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
-import portfolioLiving from "@/assets/portfolio-living.jpg";
 import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
+import chairClose from "@/assets/accent-chair-close.jpg";
+import decorDetail from "@/assets/decor-setup.jpg";
 
 const values = [
   {
@@ -85,8 +86,8 @@ const About = () => {
               <div className="relative">
                 <div className="img-zoom rounded-sm overflow-hidden">
                   <img
-                    src={portfolioLiving}
-                    alt="ADÉmaison interior design project showcase"
+                    src={chairClose}
+                    alt="ADÉmaison detail focus: Armchair and plant setup"
                     className="w-full h-[400px] lg:h-[500px] object-cover"
                   />
                 </div>
@@ -176,8 +177,8 @@ const About = () => {
               <div className="relative">
                 <div className="img-zoom rounded-sm overflow-hidden">
                   <img
-                    src={portfolioKitchen}
-                    alt="ADÉmaison design approach"
+                    src={decorDetail}
+                    alt="ADÉmaison detail focus: Sideboard and accessories"
                     className="w-full h-[400px] lg:h-[500px] object-cover"
                   />
                 </div>
