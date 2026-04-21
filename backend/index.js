@@ -4,6 +4,7 @@ const cors = require("cors");
 const contactRoutes = require("./routes/contact.routes");
 const testimonialsRoutes = require("./routes/testimonials.routes");
 const blogRoutes = require("./routes/blog.routes");
+const initializeDatabase = require("./config/init-db");
 
 const app = express();
 
@@ -38,6 +39,13 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+initializeDatabase()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Database initialization failed:", error);
+    process.exit(1);
+  });
