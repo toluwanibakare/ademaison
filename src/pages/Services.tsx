@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, MessageSquare, LayoutGrid, Eye, Home, Building2, Briefcase, UtensilsCrossed, Sofa, Armchair, Palette, Lightbulb, Droplets, ClipboardCheck, Package, Hammer, Sparkles, HeartHandshake } from "lucide-react";
-import LayoutComponent from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
+import LayoutComponent from "../components/layout/Layout";
+import PageHeader from "../components/layout/PageHeader";
 
 const services = [
   {

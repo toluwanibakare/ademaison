@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Home, ArrowLeft } from "lucide-react";
-import Layout from "@/components/layout/Layout";
+import Layout from "../components/layout/Layout";
 
 const NotFound = () => {
   const location = useLocation();

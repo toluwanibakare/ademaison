@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Quote, Send, Star, Loader2 } from "lucide-react";
-import Layout from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
-import { useToast } from "@/hooks/use-toast";
-import { getTestimonials, getRatingSummary, submitTestimonial, Testimonial, RatingSummary } from "@/api/testimonials";
+import Layout from "../components/layout/Layout";
+import PageHeader from "../components/layout/PageHeader";
+import { useToast } from "../hooks/use-toast";
+import { getTestimonials, getRatingSummary, submitTestimonial, Testimonial, RatingSummary } from "../api/testimonials";
 
 const StarRating = ({
   rating,

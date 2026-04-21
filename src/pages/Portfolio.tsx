@@ -2,13 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, ArrowRight, Play } from "lucide-react";
-import Layout from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
-import portfolioLiving from "@/assets/portfolio-living.jpg";
-import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
-import portfolioBedroom from "@/assets/portfolio-bedroom.jpg";
-import portfolioOffice from "@/assets/portfolio-office.jpg";
-import heroImage from "@/assets/hero-living-room.jpg";
+import Layout from "../components/layout/Layout";
+import PageHeader from "../components/layout/PageHeader";
+import portfolioLiving from "../assets/portfolio-living.jpg";
+import portfolioKitchen from "../assets/portfolio-kitchen.jpg";
+import portfolioBedroom from "../assets/portfolio-bedroom.jpg";
+import portfolioOffice from "../assets/portfolio-office.jpg";
+import heroImage from "../assets/hero-living-room.jpg";
 const projects = [{
   id: 1,
   image: heroImage,

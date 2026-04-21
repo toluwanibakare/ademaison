@@ -9,8 +9,8 @@ import {
   CheckCircle,
   Sparkles,
 } from "lucide-react";
-import Layout from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
+import Layout from "../components/layout/Layout";
+import PageHeader from "../components/layout/PageHeader";
 
 const reasons = [
   {

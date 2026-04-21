@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Gem, Shield } from "lucide-react";
-import Layout from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
-import portfolioLiving from "@/assets/portfolio-living.jpg";
-import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
+import Layout from "../components/layout/Layout";
+import PageHeader from "../components/layout/PageHeader";
+import portfolioLiving from "../assets/portfolio-living.jpg";
+import portfolioKitchen from "../assets/portfolio-kitchen.jpg";
 
 const values = [
   {

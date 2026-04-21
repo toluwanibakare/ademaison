@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import Layout from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
+import { useToast } from "../hooks/use-toast";
+import Layout from "../components/layout/Layout";
+import PageHeader from "../components/layout/PageHeader";
 
 const serviceOptions = [
   "Residential Interior Design",

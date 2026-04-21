@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Users, Clock, Star, Home, Building, Ruler } from "lucide-react";
-import Layout from "@/components/layout/Layout";
-import heroImage from "@/assets/hero-living-room.jpg";
-import portfolioLiving from "@/assets/portfolio-living.jpg";
-import portfolioKitchen from "@/assets/portfolio-kitchen.jpg";
-import portfolioBedroom from "@/assets/portfolio-bedroom.jpg";
-import { getRatingSummary } from "@/api/testimonials";
+import Layout from "../components/layout/Layout";
+import heroImage from "../assets/hero-living-room.jpg";
+import portfolioLiving from "../assets/portfolio-living.jpg";
+import portfolioKitchen from "../assets/portfolio-kitchen.jpg";
+import portfolioBedroom from "../assets/portfolio-bedroom.jpg";
+import { getRatingSummary } from "../api/testimonials";
 
 const services = [
   {
