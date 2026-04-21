@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Users, Clock, Star, Home, Building, Ruler } from "lucide-react";
+import { ArrowRight, Globe, Users, Clock, Star, Home, Building, Ruler, ArrowUpRight, BookOpen } from "lucide-react";
 import Layout from "../components/layout/Layout";
-import heroImage from "../assets/hero-living-room.jpg";
 import portfolioLiving from "../assets/portfolio-living.jpg";
+import industrialShelving from "../assets/industrial-shelving.jpg";
 import portfolioKitchen from "../assets/portfolio-kitchen.jpg";
 import portfolioBedroom from "../assets/portfolio-bedroom.jpg";
+import diningFull from "../assets/dining-room-full.jpg";
+import accentChair from "../assets/accent-chair.jpg";
+import wallArt from "../assets/wall-art-setup.jpg";
 import { getRatingSummary } from "../api/testimonials";
 
 const services = [
@@ -28,14 +31,45 @@ const services = [
 ];
 
 const portfolioPreview = [
-  { image: portfolioLiving, title: "Modern Living Room" },
-  { image: portfolioKitchen, title: "Luxury Kitchen" },
-  { image: portfolioBedroom, title: "Serene Bedroom" },
+  { image: diningFull, title: "Signature Dining" },
+  { image: accentChair, title: "Modern Nook" },
+  { image: wallArt, title: "Artistic Living Corner" },
+];
+
+
+const faqs = [
+  {
+    question: "Do you offer full home renovation services?",
+    answer: "Yes, ADÉmaison provides complete home renovation services. We handle everything from the initial design concept to space planning, material selection, and project management to ensure a seamless transformation."
+  },
+  {
+    question: "How long does a typical interior design project take?",
+    answer: "The timeline depends on the scope of the project. A single-room makeover might take 4-6 weeks, while a full commercial or residential project can take several months. We'll provide a clear timeline during our initial consultation."
+  },
+  {
+    question: "How do you determine the budget for a project?",
+    answer: "During our initial strategy session, we discuss your goals and financial comfort zone. We then tailor our design recommendations, from furniture selection to material sourcing to align precisely with your established budget without compromising on quality."
+  },
+  {
+    question: "Can I incorporate my existing furniture into a new design?",
+    answer: "Absolutely! Integrating your beloved existing pieces is an essential part of making a house feel like your home. We carefully assess what you have and skillfully blend them into the new overall aesthetic."
+  },
+  {
+    question: "Do you offer virtual design or e-design services?",
+    answer: "Yes, we offer comprehensive e-design services, we have softwares we use to give you a pictorial view of what your space will look like in 3D, before we actually get started."
+  }
 ];
 
 const Index = () => {
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [dynamicBlogs, setDynamicBlogs] = useState<any[]>([]);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+
   const [stats, setStats] = useState([
-    { value: "150+", label: "Projects Completed", icon: Award },
+    { value: "4+", label: "Countries", icon: Globe },
     { value: "10+", label: "Years Experience", icon: Clock },
     { value: "0", label: "Reviews", icon: Users },
     { value: "0.0", label: "Client Rating", icon: Star },
@@ -62,18 +96,31 @@ const Index = () => {
       }
     };
 
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/blogs");
+        const data = await res.json();
+        if (data.success) {
+          setDynamicBlogs(data.data.slice(0, 3));
+        }
+      } catch (error) {
+        console.error("Failed to fetch fresh blogs:", error);
+      }
+    };
+
     fetchRatingSummary();
+    fetchBlogs();
   }, []);
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={heroImage}
-            alt="Luxurious modern interior design by ADÉmaison"
-            className="w-full h-full object-cover"
+            src={diningFull}
+            alt="Luxurious Dining Room by ADÉmaison"
+            className="w-full h-full object-cover scale-105"
           />
           <div className="absolute inset-0 hero-overlay" />
         </div>
@@ -84,7 +131,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-accent-foreground/90 text-lg mb-4 tracking-wider uppercase"
+              className="text-lg md:text-xl font-medium mb-4 tracking-wider uppercase bg-clip-text text-transparent animate-gradient-text bg-[linear-gradient(90deg,hsl(var(--primary)),hsl(var(--accent)),hsl(var(--gold)),hsl(var(--primary)))] bg-[length:300%_auto]"
             >
               ADÉmaison Interior Design
             </motion.p>
@@ -92,7 +139,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif text-primary-foreground mb-6 leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif text-primary-foreground mb-6 leading-tight drop-shadow-sm"
             >
               Transforming Spaces Into Stunning Sanctuaries
             </motion.h1>
@@ -100,7 +147,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-xl"
+              className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-xl leading-relaxed"
             >
               We create bespoke interior designs that reflect your unique style 
               and elevate your everyday living experience.
@@ -113,7 +160,7 @@ const Index = () => {
             >
               <Link to="/contact" className="btn-accent">
                 Book a Session
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 ml-1" />
               </Link>
               <Link to="/portfolio" className="btn-ghost text-primary-foreground border border-primary-foreground/30 hover:bg-primary-foreground/10">
                 View Our Work
@@ -136,7 +183,7 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-gold" />
+                <stat.icon className="w-8 h-8 mx-auto mb-3 text-gold group-hover:scale-110 transition-transform duration-500" />
                 <div className="text-3xl md:text-4xl font-serif text-primary-foreground mb-2">
                   {stat.value}
                 </div>
@@ -191,8 +238,8 @@ const Index = () => {
             >
               <div className="img-zoom rounded-sm overflow-hidden">
                 <img
-                  src={portfolioLiving}
-                  alt="ADÉmaison interior design project"
+                  src={industrialShelving}
+                  alt="ADÉmaison stylized industrial shelving unit"
                   className="w-full h-[500px] object-cover"
                 />
               </div>
@@ -324,6 +371,135 @@ const Index = () => {
                 </Link>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blogs Preview Section */}
+      <section className="section-padding bg-secondary/30 relative overflow-hidden">
+        <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-accent font-medium tracking-wider uppercase mb-4 flex items-center gap-2"
+              >
+                <BookOpen className="w-5 h-5" /> Interior Design Journal
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="section-title"
+              >
+                Latest Interial Insights
+              </motion.h2>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="mt-6 md:mt-0"
+            >
+              <Link to="/blog" className="btn-outline">
+                Visit Our Journal
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </motion.div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 relative z-10">
+            {dynamicBlogs.map((blog, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Link
+                  to={`/post/${blog.slug}`}
+                  className="group premium-card flex flex-col h-full bg-card hover:bg-primary hover:text-primary-foreground transform transition-all duration-500 rounded-xl overflow-hidden shadow-sm"
+                >
+                  <div className="mb-4 text-sm font-medium text-muted-foreground group-hover:text-primary-foreground/70 transition-colors">
+                    {new Date(blog.published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </div>
+                  <h3 className="text-xl font-serif mb-4 text-foreground group-hover:text-primary-foreground transition-colors line-clamp-2">
+                    {blog.title}
+                  </h3>
+                  <p className="text-muted-foreground group-hover:text-primary-foreground/90 transition-colors mb-8 flex-grow line-clamp-3 leading-relaxed">
+                    {blog.body.replace(/<[^>]*>?/gm, '').substring(0, 150)}...
+                  </p>
+                  <div className="flex items-center text-primary group-hover:text-accent font-semibold transition-colors mt-auto">
+                    Read Article <ArrowUpRight className="ml-2 w-4 h-4 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="section-padding bg-background">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-16">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-accent font-medium tracking-wider uppercase mb-4"
+            >
+              Have Questions?
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="section-title"
+            >
+              Frequently Asked Questions
+            </motion.h2>
+          </div>
+          <div className="space-y-4 relative z-10">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <div 
+                  key={index}
+                  className="group border border-border/50 bg-card rounded-lg overflow-hidden"
+                >
+                  <button 
+                    onClick={() => toggleFaq(index)}
+                    className="w-full flex items-center justify-between p-6 cursor-pointer font-medium text-lg hover:text-primary transition-colors text-left"
+                  >
+                    {faq.question}
+                    <span className={`transition-transform duration-300 text-primary ${isOpen ? 'rotate-180' : ''}`}>
+                      <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                    </span>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="px-6 pb-6 text-muted-foreground leading-relaxed">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

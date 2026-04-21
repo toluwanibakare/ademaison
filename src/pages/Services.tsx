@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, MessageSquare, LayoutGrid, Eye, Home, Building2, Briefcase, UtensilsCrossed, Sofa, Armchair, Palette, Lightbulb, Droplets, ClipboardCheck, Package, Hammer, Sparkles, HeartHandshake } from "lucide-react";
+import { ArrowRight, MessageSquare, LayoutGrid, Eye, Home, Building2, Briefcase, UtensilsCrossed, Sofa, Armchair, Palette, Lightbulb, Droplets, ClipboardCheck, Package, Hammer, Star, HeartHandshake } from "lucide-react";
 import LayoutComponent from "../components/layout/Layout";
 import PageHeader from "../components/layout/PageHeader";
 
@@ -81,7 +81,7 @@ const services = [
     description: "Transform existing spaces with fresh design and purpose.",
   },
   {
-    icon: Sparkles,
+    icon: Star,
     title: "Styling & Staging",
     description: "Final touches that bring personality and life to your space.",
   },

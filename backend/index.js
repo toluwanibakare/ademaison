@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const contactRoutes = require("./routes/contact.routes");
 const testimonialsRoutes = require("./routes/testimonials.routes");
+const blogRoutes = require("./routes/blog.routes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api/contact", contactRoutes);
 app.use("/api/testimonials", testimonialsRoutes);
+app.use("/api/blogs", blogRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

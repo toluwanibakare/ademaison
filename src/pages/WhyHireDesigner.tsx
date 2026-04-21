@@ -7,7 +7,7 @@ import {
   Palette,
   TrendingUp,
   CheckCircle,
-  Sparkles,
+  Star,
 } from "lucide-react";
 import Layout from "../components/layout/Layout";
 import PageHeader from "../components/layout/PageHeader";
@@ -36,7 +36,7 @@ const reasons = [
     ],
   },
   {
-    icon: Sparkles,
+    icon: Star,
     title: "Reduce Stress",
     description:
       "Designing a space can be overwhelming. From managing contractors to making endless choices, the process can quickly become stressful. We handle the complexities, providing a smooth, enjoyable experience from start to finish.",

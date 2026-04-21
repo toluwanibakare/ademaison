@@ -105,9 +105,7 @@
     --sidebar-border: 168 15% 20%;
     --sidebar-ring: 175 16% 45%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -144,18 +142,39 @@
 @layer components {
   /* Premium Button Styles */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-medium tracking-wide transition-all duration-300;
-    @apply hover:bg-primary/90 hover:shadow-lg hover:-translate-y-0.5;
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-medium tracking-wide transition-all duration-300 z-10;
+    @apply hover:text-primary-foreground hover:shadow-lg hover:-translate-y-0.5;
+  }
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-accent scale-x-0 origin-left transition-transform duration-500 ease-out -z-10;
+  }
+  .btn-primary:hover::before {
+    @apply scale-x-100;
   }
 
   .btn-accent {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-medium tracking-wide transition-all duration-300;
-    @apply hover:bg-accent/90 hover:shadow-lg hover:-translate-y-0.5;
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-medium tracking-wide transition-all duration-300 z-10;
+    @apply hover:text-accent-foreground hover:shadow-lg hover:-translate-y-0.5;
+  }
+  .btn-accent::before {
+    content: '';
+    @apply absolute inset-0 bg-primary scale-x-0 origin-left transition-transform duration-500 ease-out -z-10;
+  }
+  .btn-accent:hover::before {
+    @apply scale-x-100;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary text-primary font-medium tracking-wide transition-all duration-300;
-    @apply hover:bg-primary hover:text-primary-foreground;
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary text-primary font-medium tracking-wide transition-all duration-300 z-10;
+    @apply hover:text-primary-foreground;
+  }
+  .btn-outline::before {
+    content: '';
+    @apply absolute inset-0 bg-primary scale-x-0 origin-left transition-transform duration-500 ease-out -z-10;
+  }
+  .btn-outline:hover::before {
+    @apply scale-x-100;
   }
 
   .btn-ghost {
@@ -290,5 +309,15 @@
       opacity: 1;
       transform: translateX(0);
     }
+  }
+
+  @keyframes gradientText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient-text {
+    animation: gradientText 4s ease infinite;
   }
 }
